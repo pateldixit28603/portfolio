@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dixit Patel — Data Scientist & Software Developer</title>
+  <meta name="description" content="Portfolio of Dixit Jayesh Patel — Data Science, Machine Learning, Full-stack Development." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* ==== Color System (easy to tweak) ==== */
+      --bg:#0b1220;                 /* page background */
+      --surface:#0f172a;            /* cards / sections */
+      --surface-2:#0b1220;          /* hero */
+      --text:#f7faff;               /* main text */
+      --muted:#9ca3af;              /* secondary text */
+      --primary:#22d3ee;            /* cyan */
+      --primary-600:#06b6d4;        /* darker cyan */
+      --accent:#a78bfa;             /* purple */
+      --ring: rgba(34,211,238,.35);
+      --shadow: 0 12px 40px rgba(2,6,23,.45);
+      --radius: 18px;
+
+      /* NEW: fixed elements sizing */
+      --nav-h: 64px;
+      --footer-h: 56px;
+    }
+
+    /* ===== Reset & Base ===== */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;
+      /* keep content clear of fixed footer */
+      padding-bottom: var(--footer-h);
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+    /* Native smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* ===== Header ===== */
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      background:rgba(15,23,42,.6);
+      backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      height: var(--nav-h);           /* NEW: fixed predictable height */
+      display:flex;align-items:center; /* center nav vertically */
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between; width:100%; height:100%; padding:0 0;}
+    .brand{font-weight:800;letter-spacing:.3px}
+    .brand span{color:var(--primary)}
+    .links{display:flex;gap:28px;margin:0}
+    .links a{font-weight:600;font-size:.95rem;color:var(--muted);position:relative}
+    .links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .25s ease}
+    .links a:hover{color:#fff}
+    .links a:hover::after{width:100%}
+
+    /* ===== Hero ===== */
+    .hero{min-height:92vh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;background:radial-gradient(1200px 600px at 50% -200px, rgba(167,139,250,.25), transparent 60%), radial-gradient(1200px 600px at 100% 0, rgba(34,211,238,.18), transparent 60%)}
+    .hero-inner{padding-top: calc(var(--nav-h) + 16px);} /* NEW: clears fixed header */
+    .kicker{color:var(--primary);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.8rem}
+    .title{font-size:clamp(2.2rem,5.8vw,4rem);line-height:1.1;margin:.6rem 0 1rem;font-weight:800}
+    .subtitle{max-width:760px;margin:0 auto 1.8rem;color:var(--muted);font-size:clamp(1rem,2.1vw,1.25rem)}
+    .cta{display:inline-flex;align-items:center;gap:.6rem;padding:12px 18px;border-radius:999px;background:linear-gradient(90deg,var(--primary-600),var(--accent));color:#0b1220;font-weight:800;box-shadow:var(--shadow);border:none}
+    .cta:hover{filter:brightness(1.05)}
+    .cta-outline{margin-left:12px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.16);box-shadow:none}
+    .cta-outline:hover{border-color:rgba(255,255,255,.32)}
+
+    /* ===== Sections ===== */
+    section{padding:80px 0}
+    .section-title{font-size:2rem;margin:0 0 28px;font-weight:800}
+    .section-title .bar{display:block;width:84px;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px;margin-top:10px}
+
+    /* NEW: offset anchors so titles aren’t hidden under header */
+    section[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+    /* ===== About ===== */
+    .about{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+    .avatar-wrap{position:relative}
+    .avatar{width:260px;height:260px;object-fit:cover;border-radius:22px;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 40px rgba(2,6,23,.55)}
+    .about p{color:#cbd5e1;margin:0 0 12px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:10px}
+    .chip{padding:14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);text-align:center}
+    .chip b{display:block;font-size:1.4rem;color:#fff}
+
+    /* ===== Cards / grids ===== */
+    .grid{display:grid;gap:18px}
+    .grid-cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid-cols-2{grid-template-columns:repeat(2,1fr)}
+    .card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .2s ease}
+    .card:hover{transform:translateY(-4px)}
+    .card h3{margin:0 0 10px;font-size:1.15rem;color:#fff}
+    .tag{display:inline-block;font-size:.78rem;padding:6px 10px;border-radius:999px;background:rgba(34,211,238,.14);border:1px solid var(--ring);margin:6px 6px 0 0}
+
+    /* ===== Timeline ===== */
+    .timeline{position:relative}
+    .timeline::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(var(--primary),var(--accent))}
+    .step{position:relative;padding-left:38px;margin:24px 0}
+    .step::before{content:"";position:absolute;left:1px;top:4px;width:18px;height:18px;border-radius:50%;background:linear-gradient(90deg,var(--primary),var(--accent));box-shadow:0 0 0 4px rgba(34,211,238,.12)}
+    .company{color:var(--muted);font-weight:700;margin:.15rem 0 .6rem}
+    .step ul{margin:.2rem 0 0;padding-left:18px;color:#cbd5e1}
+
+    /* ===== Contact ===== */
+    .contact{display:flex;flex-wrap:wrap;gap:12px}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02)}
+    .pill:hover{border-color:rgba(255,255,255,.28)}
+
+    /* ===== Footer ===== */
+    footer{padding:40px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px){
+      .about{grid-template-columns:1fr}
+      .avatar{width:100%;height:380px}
+      .grid-cols-3{grid-template-columns:1fr}
+      .grid-cols-2{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .links{display:none}
+    }
+
+    /* === AI Avatar Welcome Overlay === */
+    .ai-welcome {
+      position: fixed; inset: 0; z-index: 1000;
+      display: grid; place-items: center;
+      background: radial-gradient(800px 400px at 50% -120px, rgba(167,139,250,.18), transparent 60%),
+                  rgba(2,6,23,.55);
+      backdrop-filter: blur(6px) saturate(130%);
+      opacity: 0; pointer-events: none; transition: opacity .35s ease;
+    }
+    .ai-welcome.show { opacity: 1; pointer-events: auto; }
+    .ai-card { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid rgba(255,255,255,.10); border-radius: 22px; padding: 18px 20px; box-shadow: var(--shadow); max-width: 640px; width: calc(100% - 48px); }
+    .ai-avatar { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.18); box-shadow: 0 10px 30px rgba(2,6,23,.55); animation: glow 2.2s ease-in-out infinite alternate; }
+    @keyframes glow { from { box-shadow: 0 10px 30px rgba(34,211,238,.25); } to { box-shadow: 0 10px 38px rgba(167,139,250,.35); } }
+    .ai-text { line-height: 1.5; }
+    .ai-text .hello { font-weight: 800; font-size: 1.05rem; color: #fff; }
+    .ai-text .type { color: var(--muted); display: inline; border-right: 2px solid var(--primary); }
+    .ai-actions { margin-left: auto; display: flex; gap: 8px; }
+    .ai-btn { padding: 8px 12px; border-radius: 999px; font-weight: 700; font-size: .9rem; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.03); color: var(--text); }
+    .ai-btn:hover { border-color: rgba(255,255,255,.32) }
+  </style>
+</head>
+<body>
+
+  <!-- AI Avatar Welcome -->
+  <div class="ai-welcome" id="aiWelcome" aria-live="polite">
+    <div class="ai-card">
+      <img class="ai-avatar" src="D:\ChatGPT Image Aug 11, 2025, 08_31_38 AM.png" alt="Dixit avatar" />
+      <div class="ai-text">
+        <div class="hello">Hi, I’m Dixit 👋</div>
+        <div><span class="type" id="aiType"></span></div>
+      </div>
+      <div class="ai-actions">
+        <button class="ai-btn" id="aiSound" aria-label="Enable sound">🔊 Sound on</button>
+        <button class="ai-btn" id="aiSkip" aria-label="Close welcome">Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <nav class="nav container">
+      <a class="brand" href="#home" style="display:flex;align-items:center;font-weight:bold;font-size:1.2rem;">Dixit Patel</a>
+      <div class="links" style="display:flex;gap:20px;align-items:center;">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#hackathons">Hackathons</a>
+        <a href="#skills">Skills</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ===== Hero ===== -->
+  <section id="home" class="hero" style="padding:60px 0;">
+    <div class="hero-inner container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <!-- Left -->
+      <div style="flex:1; min-width:280px;">
+        <div class="kicker" style="font-size:18px; color:#bbb; text-transform:uppercase; letter-spacing:2px;">Data • ML • Software</div>
+        <h1 class="title" style="font-size:42px; margin:10px 0;">Hi, I'm <span style="color:#7bb3ff;">Dixit Patel</span> 👋</h1>
+        <p class="subtitle" style="font-size:18px; color:#ccc;">Data Scientist & Software Developer focused on shipping reliable ML systems, clear analytics, and robust, scalable apps.</p>
+
+        <div style="margin-top:20px; display:flex; gap:10px; justify-content:center;">
+          <a class="cta" href="#contact" style="padding:12px 25px; background:#4b9cff; color:#fff; border-radius:8px;">Let's Connect</a>
+          <a class="cta cta-outline" href="#projects" style="padding:12px 25px; background:transparent; border:2px solid #4b9cff; color:#4b9cff; border-radius:8px;">View Projects</a>
+        </div>
+
+        <div style="margin-top:15px; text-align:center;">
+          <a class="cta" href="C:\Users\Dixit\OneDrive - Pace University\Resume\Dixit Jayesh Patel_Data Science_F1 - Copy.pdf" target="_blank" style="padding:12px 25px; background:#28a745; color:#fff; border-radius:8px; display:inline-block;">📄 View Resume</a>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div style="flex:1; min-width:280px; display:flex; justify-content:center;">
+        <img src="C:\OneDrive\Desktop\WhatsApp Image 2024-10-17 at 09.09.12_b6a444c3.jpg" alt="Dixit Patel" style="width:300px; height:300px; border-radius:50%; object-fit:cover; border:5px solid rgba(255,255,255,0.1); box-shadow:0 4px 15px rgba(0,0,0,0.5);">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section id="about" style="padding:40px 0;">
+    <div class="container" style="max-width:900px; margin:0 auto;">
+      <h2 class="section-title" style="text-align:center; margin-bottom:15px;">About Me <span class="bar" style="display:block; margin:8px auto 0;"></span></h2>
+      <p style="text-align:justify; margin-bottom:15px;">I'm a passionate Data Scientist and Software Developer currently pursuing my Master's in Computer Science at Pace University (GPA 3.9). I convert complex data into actionable insights and build scalable, production-grade software.</p>
+      <p style="text-align:justify; margin-bottom:25px;">My experience spans AI chatbots, RAG systems, analytics dashboards, and cloud-native backends. Comfortable across Python, React, SQL, and AWS, with a strong focus on clean architecture and measurable impact.</p>
+
+      <div class="stats" style="display:flex;flex-wrap:wrap;justify-content:center;gap:15px; margin-top:20px;">
+        <div class="chip" style="padding:10px 15px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;text-align:center;min-width:120px;"><b>3.9</b> GPA</div>
+        <div class="chip" style="padding:10px 15px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;text-align:center;min-width:120px;"><b>50K+</b> Data points analyzed</div>
+        <div class="chip" style="padding:10px 15px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;text-align:center;min-width:120px;"><b>75%</b> Model accuracy</div>
+        <div class="chip" style="padding:10px 15px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;text-align:center;min-width:120px;"><b>2</b> AWS certifications</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Skills ===== -->
+<section id="skills">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Technical Skills
+      <span class="bar" style="margin-left:auto; margin-right:auto;"></span>
+    </h2>
+
+    <div class="grid grid-cols-3" style="text-align:center; justify-content:center; align-items:center;">
+
+      <div class="card">
+        <h3>Programming</h3>
+        <span class="bar" style="display:block;width:60px;height:3px;margin:6px auto 12px;background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px;"></span>
+        <div>
+          <span class="tag">Python</span><span class="tag">C++</span>
+          <span class="tag">Java</span><span class="tag">JavaScript</span>
+          <span class="tag">SQL</span><span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Data Science & ML</h3>
+        <span class="bar" style="display:block;width:60px;height:3px;margin:6px auto 12px;background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px;"></span>
+        <div>
+          <span class="tag">Pandas</span><span class="tag">NumPy</span>
+          <span class="tag">scikit-learn</span><span class="tag">XGBoost</span>
+          <span class="tag">NLP</span><span class="tag">ETL</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Web</h3>
+        <span class="bar" style="display:block;width:60px;height:3px;margin:6px auto 12px;background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px;"></span>
+        <div>
+          <span class="tag">React</span><span class="tag">Node.js</span>
+          <span class="tag">API Design</span><span class="tag">MongoDB</span>
+          <span class="tag">MySQL</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Cloud & DevOps</h3>
+        <span class="bar" style="display:block;width:60px;height:3px;margin:6px auto 12px;background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px;"></span>
+        <div>
+          <span class="tag">AWS</span><span class="tag">EC2</span>
+          <span class="tag">S3</span><span class="tag">Lambda</span>
+          <span class="tag">CloudFormation</span><span class="tag">CI/CD</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Visualization</h3>
+        <span class="bar" style="display:block;width:60px;height:3px;margin:6px auto 12px;background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px;"></span>
+        <div>
+          <span class="tag">Power BI</span><span class="tag">Looker Studio</span>
+          <span class="tag">Tableau</span><span class="tag">Matplotlib</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Big Data</h3>
+        <span class="bar" style="display:block;width:60px;height:3px;margin:6px auto 12px;background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px;"></span>
+        <div>
+          <span class="tag">Hadoop</span><span class="tag">Hive</span>
+          <span class="tag">Apache Spark</span><span class="tag">Data Mining</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- ===== Experience ===== -->
+<section id="experience">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Work Experience
+      <span class="bar" style="margin-left:auto; margin-right:auto;"></span>
+    </h2>
+    <div class="timeline">
+      <div class="step card">
+        <h3>Data Analyst Intern</h3>
+        <div class="company">Aspire High Youth Development Inc. · May 2025 – Present</div>
+        <ul>
+          <li>Analyzed student performance data to inform strategy.</li>
+          <li>Built visual reports and dashboards for stakeholders.</li>
+          <li>Maintained databases with strong data integrity.</li>
+        </ul>
+      </div>
+
+      <div class="step card">
+        <h3>Python Developer</h3>
+        <div class="company">Brainy Beam Technologies · Jan 2023 – Apr 2024</div>
+        <ul>
+          <li>Developed student-facing mobile app with secure OTP auth.</li>
+          <li>Collaborated closely with frontend team on UI/UX.</li>
+          <li>Drove bug reduction through systematic debugging.</li>
+        </ul>
+      </div>
+
+      <div class="step card">
+        <h3>Data Science & ML Intern</h3>
+        <div class="company">STYPIX · Jun 2022 – Jul 2022</div>
+        <ul>
+          <li>Cleaned 50K+ row stock datasets and performed EDA.</li>
+          <li>Achieved 70–75% predictive accuracy with linear models.</li>
+          <li>Visualized price trends with Python tooling.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ===== Certifications ===== -->
+<section id="certifications">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Certifications 
+      <span class="bar" style="margin-left:auto; margin-right:auto;"></span>
+    </h2>
+
+    <div class="grid grid-cols-2" style="text-align:center; justify-content:center; align-items:center;">
+      <a class="card badge-card" href="https://www.credly.com/badges/94b363f8-66ba-4f4c-a103-7c593a7313a2/public_url" target="_blank" rel="noopener" style="flex-direction:column;align-items:center;text-align:center;">
+        <img class="badge-img" src="D:\image.png" alt="AWS Certified Cloud Practitioner badge" style="width:150px;height:150px;border-radius:10px;display:block;margin:auto;">
+        <div>
+          <h3 style="margin:8px 0 6px">AWS Certified Cloud Practitioner</h3>
+          <div class="badge-meta">Verified on Credly · Click to view</div>
+        </div>
+      </a>
+
+      <a class="card badge-card" href="https://www.credly.com/badges/0ac4bf44-2b62-4b81-9fdd-f76c076cc5f4/public_url" target="_blank" rel="noopener" style="flex-direction:column;align-items:center;text-align:center;">
+        <img class="badge-img" src="D:\image (1).png" alt="AWS Certified Solutions Architect badge" style="width:150px;height:150px;border-radius:10px;display:block;margin:auto;">
+        <div>
+          <h3 style="margin:8px 0 6px">AWS Certified Solutions Architect</h3>
+          <div class="badge-meta">Verified on Credly · Click to view</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ===== Projects ===== -->
+<section id="projects">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Featured Projects 
+      <span class="bar" style="margin-left:auto; margin-right:auto;"></span>
+    </h2>
+
+    <div class="grid grid-cols-3" style="text-align:center; justify-content:center; align-items:center;">
+      
+      <div class="card">
+        <h3>AI Chatbot for CaterPal</h3>
+        <p>Menu recommendations based on budget & dietary needs using NLP pipelines.</p>
+        <div>
+          <span class="tag">OpenAI API</span>
+          <span class="tag">spaCy</span>
+          <span class="tag">NLTK</span>
+        </div>
+        <a href="https://github.com/pateldixit28603" target="_blank" class="github-icon">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+
+      <div class="card">
+        <h3>QuickQuest — RAG Tool</h3>
+        <p>Context-aware answers over PDF knowledge bases with vector search.</p>
+        <div>
+          <span class="tag">LangChain</span>
+          <span class="tag">RAG</span>
+          <span class="tag">Vector DB</span>
+        </div>
+        <a href="https://github.com/pateldixit28603" target="_blank" class="github-icon">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+
+      <div class="card">
+        <h3>Credit Card Dashboard</h3>
+        <p>Interactive BI dashboards backed by SQL for real-time insights.</p>
+        <div>
+          <span class="tag">Power BI</span>
+          <span class="tag">SQL</span>
+          <span class="tag">ETL</span>
+        </div>
+        <a href="https://github.com/pateldixit28603" target="_blank" class="github-icon">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Font Awesome (put this in <head>) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  .github-icon {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 28px; /* medium size */
+    color: #fff;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  .github-icon:hover {
+    color: #38bdf8; /* accent color */
+    transform: scale(1.1);
+  }
+</style>
+
+
+
+  <!-- ===== Hackathons ===== -->
+<section id="hackathons">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Hackathons <span class="bar" style="margin-left:auto;margin-right:auto;"></span>
+    </h2>
+
+    <div class="hack-grid">
+      <!-- CaterPal AI card -->
+      <div class="card hack-card">
+        <div class="hack-top">
+          <h3>CaterPal AI – Caterpal Technologies Hackathon</h3>
+          <div class="hack-org">Caterpal Technologies</div>
+
+          <div class="hack-meta">
+            <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;vertical-align:middle;">
+              <path d="M7 3v3M17 3v3M3.5 9h17M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
+                    stroke="#cbd5e1" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <span>Mar 2025</span>
+          </div>
+
+          <p class="hack-desc">
+            NLP-driven chatbot using Python, spaCy, and NLTK for a startup catering platform,
+            enabling real-time, budget-aware menu recommendations.
+          </p>
+
+          <div class="hack-tags" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span class="tag">NLP</span>
+            <span class="tag">Python</span>
+            <span class="tag">PostgreSQL</span>
+
+            <!-- GitHub icon -->
+            <a href="https://github.com/pateldixit28603" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" style="vertical-align:middle;">
+                <path d="M12 .5A11.5 11.5 0 0 0 .5 12.1c0 5.07 3.29 9.37 7.86 10.89.58.11.79-.25.79-.56v-2.03c-3.2.7-3.87-1.39-3.87-1.39-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.26 3.4.96.1-.75.41-1.26.75-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.04 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.22-1.49 3.2-1.18 3.2-1.18.63 1.58.23 2.75.11 3.04.75.81 1.2 1.84 1.2 3.1 0 4.41-2.69 5.39-5.25 5.68.42.37.8 1.09.8 2.2v3.26c0 .31.2.68.8.56A11.5 11.5 0 0 0 23.5 12.1 11.5 11.5 0 0 0 12 .5Z"/>
+              </svg>
+            </a>
+
+            
+            <!-- LinkedIn icon with white border -->
+          <a href="https://www.linkedin.com/posts/dixitjayeshpatel_aichatbot-openai-machinelearning-activity-7304218466465583105-rugv?utm_source=share&utm_medium=member_desktop&rcm=ACoAADY_p8wByL8Wl1cx-5hHf-lILb2wYaky6gE" target="_blank" rel="noopener" aria-label="LinkedIn"
+          style="display:inline-flex;align-items:center;justify-content:center;
+          width:28px;height:28px;border:1.5px solid #fff;border-radius:50%;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#0A66C2" style="vertical-align:middle;">
+          <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7.5 0h3.7v1.71h.05c.52-.98 1.8-2.01 3.7-2.01 3.95 0 4.68 2.6 4.68 5.98V21H18v-5.53c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.43-2.12 2.92V21h-4V9Z"/>
+          </svg>
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== Education ===== -->
+<section id="education">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Education
+      <span class="bar" style="margin-left:auto; margin-right:auto;"></span>
+    </h2>
+    <div class="grid grid-cols-2">
+
+      <!-- Pace University -->
+      <div class="card">
+        <h3>Master of Science in Computer Science</h3>
+        <div class="company">
+          <a href="https://www.pace.edu/seidenberg" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;">
+            <img src="D:\homepage-differentiators-new-york-3.jpg" alt="Pace University Logo" style="width:80px;height:80px;border-radius:50%;object-fit:cover;">
+            Pace University, Seidenberg School · New York, NY
+          </a>
+        </div>
+        <p>Concentration: Data Science · Expected May 2026</p>
+        <div class="tag">GPA 3.9</div>
+      </div>
+
+      <!-- Silver Oak University -->
+      <div class="card">
+        <h3>B.Tech. in Computer Engineering</h3>
+        <div class="company">
+          <a href="https://silveroakuni.ac.in/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;">
+            <img src="D:\download.png" alt="Silver Oak University Logo" style="width:80px;height:80px;border-radius:50%;object-fit:cover;">
+            Silver Oak University · Ahmedabad, India
+          </a>
+        </div>
+        <p>Nov 2020 – May 2024</p>
+        <div class="tag">GPA 3.9</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== Certifications ===== -->
+<section id="certifications">
+  <div class="container">
+    <h2 class="section-title" style="text-align:center;">
+      Certifications
+      <span class="bar" style="margin-left:auto; margin-right:auto;"></span>
+    </h2>
+    <div class="grid grid-cols-2">
+      <a class="card badge-card" href="https://www.credly.com/badges/94b363f8-66ba-4f4c-a103-7c593a7313a2/public_url" target="_blank" rel="noopener" style="flex-direction:column;align-items:center;text-align:center;">
+        <img class="badge-img" src="D:\image.png" alt="AWS Certified Cloud Practitioner badge" style="width:150px;height:150px;border-radius:10px;display:block;margin:auto;">
+        <div>
+          <h3 style="margin:8px 0 6px">AWS Certified Cloud Practitioner</h3>
+          <div class="badge-meta">Verified on Credly · Click to view</div>
+        </div>
+      </a>
+
+      <a class="card badge-card" href="https://www.credly.com/badges/0ac4bf44-2b62-4b81-9fdd-f76c076cc5f4/public_url" target="_blank" rel="noopener" style="flex-direction:column;align-items:center;text-align:center;">
+        <img class="badge-img" src="D:\image (1).png" alt="AWS Certified Solutions Architect badge" style="width:150px;height:150px;border-radius:10px;display:block;margin:auto;">
+        <div>
+          <h3 style="margin:8px 0 6px">AWS Certified Solutions Architect</h3>
+          <div class="badge-meta">Verified on Credly · Click to view</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- ===== Contact / Get in Touch ===== -->
+  <section id="contact" class="contact-wrap">
+    <style>
+      .contact-wrap{ padding:60px 0; background:transparent; }
+      .contact-container{ max-width:1100px;margin:0 auto;padding:0 24px; }
+      .contact-title{ text-align:center;margin:0 0 28px;font-weight:800;font-size:clamp(1.6rem,3.6vw,2.2rem); }
+      .contact-title .bar{ display:block;width:110px;height:3px;margin:10px auto 0; background:linear-gradient(90deg,#22d3ee,#a78bfa);border-radius:2px; }
+      .contact-grid{ display:grid;grid-template-columns:1fr 1fr;gap:22px; }
+      .contact-card{ background:rgba(15,23,42,.85); border:1px solid rgba(255,255,255,.06); border-radius:18px; box-shadow:0 12px 40px rgba(2,6,23,.45); padding:22px; }
+      .contact-card h3{ margin:0 0 14px;font-size:1.15rem;font-weight:800; }
+      .ci-row{display:flex;align-items:flex-start;gap:12px;margin:14px 0;}
+      .ci-icon{width:22px;height:22px;flex:0 0 22px;opacity:.95}
+      .ci-text{color:#cbd5e1}
+      .social-row{ display:flex;gap:12px;margin-top:8px; }
+      .icon-btn{ width:40px;height:40px;display:inline-flex;justify-content:center;align-items:center; border-radius:999px;border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.03); transition:transform .15s ease,border-color .2s ease,background .2s ease; }
+      .icon-btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.06)}
+      .icon-btn svg{width:22px;height:22px}
+      .ico-ln{fill:#0A66C2}.ico-gh{fill:#fff}.ico-ig{fill:#E4405F}.ico-x{fill:#fff}
+      .contact-form label{display:block;font-size:.9rem;margin:12px 0 6px;color:#cbd5e1}
+      .contact-form input,.contact-form textarea{ width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03);color:#e5e7eb;outline:none; transition:border-color .2s ease,box-shadow .2s ease; }
+      .contact-form input:focus,.contact-form textarea:focus{ border-color:rgba(34,211,238,.45); box-shadow:0 0 0 4px rgba(34,211,238,.18); }
+      .contact-form textarea{min-height:140px;resize:vertical}
+      .send-btn{ margin-top:14px;width:100%;padding:12px 16px;border:none;border-radius:12px;cursor:pointer; font-weight:700;color:#0b1220;background:linear-gradient(90deg,#4b9cff,#7bb3ff); box-shadow:0 10px 30px rgba(2,6,23,.45); }
+      .send-btn:hover{filter:brightness(1.05)}
+      @media (max-width:900px){ .contact-grid{grid-template-columns:1fr} }
+    </style>
+
+    <div class="contact-container">
+      <h2 class="contact-title">Get in <span style="color:#7bb3ff">Touch</span><span class="bar"></span></h2>
+
+      <div class="contact-grid">
+        <!-- Left: Contact Information -->
+        <div class="contact-card">
+          <h3>Contact Information</h3>
+
+          <div class="ci-row">
+            <svg class="ci-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#22d3ee" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.236-8 5.333-8-5.333V6l8 5.333L20 6v2.236Z"/></svg>
+            <div class="ci-text">
+              <div style="font-weight:700">Email</div>
+              <a href="mailto:dp04166n@pace.edu" style="color:#93c5fd;text-decoration:none">dp04166n@pace.edu</a>
+            </div>
+          </div>
+
+          <div class="ci-row">
+            <svg class="ci-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#a78bfa" d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.72 11.59 7 11.86.28.27.72.27 1 0 .28-.27 7-6.61 7-11.86 0-4.42-3.58-8-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg>
+            <div class="ci-text">
+              <div style="font-weight:700">Location</div>
+              New York, NY
+            </div>
+          </div>
+
+          <div class="ci-row" style="margin-top:18px;"><div style="font-weight:700">Connect with me</div></div>
+          <div class="social-row">
+            <a class="icon-btn" href="https://www.linkedin.com/in/dixitjayeshpatel/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg class="ico-ln" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.6c0-1.34-.02-3.07-1.87-3.07-1.88 0-2.16 1.47-2.16 2.98v5.69H9.32V9h3.41v1.56h.05c.47-.9 1.61-1.86 3.31-1.86 3.54 0 4.2 2.33 4.2 5.36v6.39ZM5.34 7.44A2.06 2.06 0 1 1 5.35 3.3a2.06 2.06 0 0 1-.01 4.14ZM7.1 20.45H3.58V9h3.52v11.45Z"/></svg>
+            </a>
+            <a class="icon-btn" href="https://github.com/pateldixit28603" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg class="ico-gh" viewBox="0 0 24 24"><path d="M12 .5A11.5 11.5 0 0 0 .5 12.1c0 5.07 3.29 9.37 7.86 10.89.58.11.79-.25.79-.56v-2.03c-3.2.7-3.87-1.39-3.87-1.39-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.26 3.4.96.1-.75.41-1.26.75-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.04 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.22-1.49 3.2-1.18 3.2-1.18.63 1.58.23 2.75.11 3.04.75.81 1.2 1.84 1.2 3.1 0 4.41-2.69 5.39-5.25 5.68.42.37.8 1.09.8 2.2v3.26c0 .31.2.68.8.56A11.5 11.5 0 0 0 23.5 12.1 11.5 11.5 0 0 0 12 .5Z"/></svg>
+            </a>
+          <a class="icon-btn" href="https://www.instagram.com/dixit.in.nyc/" target="_blank" rel="noopener" aria-label="Instagram">
+            <!-- Official Instagram Logo Image -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+            alt="Instagram" width="24" height="24" style="border-radius:6px;">
+          </a>
+          </div>
+        </div>
+
+        <!-- Right: Message Form -->
+        <div class="contact-card">
+          <h3>Send a Message</h3>
+          <form class="contact-form" id="contactForm">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" placeholder="Your name" required>
+
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" placeholder="Your email" required>
+
+            <label for="cf-subject">Subject</label>
+            <input id="cf-subject" name="subject" type="text" placeholder="Subject of your message" required>
+
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" placeholder="Your message" required></textarea>
+
+            <button type="submit" class="send-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Simple mailto submit (no backend). Opens the user's email app prefilled.
+      document.getElementById('contactForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const subject = document.getElementById('cf-subject').value.trim();
+        const message = document.getElementById('cf-message').value.trim();
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+        const sub  = encodeURIComponent(subject || 'Portfolio contact');
+        window.location.href = `mailto:dp04166n@pace.edu?subject=${sub}&body=${body}`;
+      });
+    </script>
+  </section>
+
+  <!-- Footer -->
+  <footer style="padding:15px 20px; border-top:1px solid rgba(255,255,255,0.1); position:fixed; bottom:0; left:0; width:100%; background-color:inherit; z-index:1000; height: var(--footer-h); display:flex; align-items:center;">
+    <div class="container" style="display:flex;justify-content:flex-end; width:100%;">© <span id="year"></span> Dixit Jayesh Patel. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- AI Avatar welcome logic ---
+    const aiOverlay = document.getElementById('aiWelcome');
+    const typeSpan  = document.getElementById('aiType');
+    const skipBtn   = document.getElementById('aiSkip');
+    const soundBtn  = document.getElementById('aiSound');
+
+    const lines = [
+      "Welcome to my portfolio.",
+      "I build data-driven apps and ML systems.",
+      "Scroll to explore my work ↓"
+    ];
+
+    async function typeLines(texts, el, speed=22, hold=900) {
+      for (const t of texts) {
+        el.textContent = "";
+        for (let i = 0; i < t.length; i++) {
+          el.textContent = t.slice(0, i+1);
+          await new Promise(r => setTimeout(r, speed));
+        }
+        await new Promise(r => setTimeout(r, hold));
+      }
+    }
+
+    function hideOverlay() {
+      aiOverlay.classList.remove('show');
+      setTimeout(()=> aiOverlay.style.display = 'none', 350);
+    }
+
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return false;
+      speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 1; utter.pitch = 1;
+      const trySpeak = () => {
+        const voices = speechSynthesis.getVoices();
+        const preferred = voices.find(v => /en-US|en_GB|en-IN/i.test(v.lang)) || voices[0];
+        if (preferred) utter.voice = preferred;
+        try { speechSynthesis.speak(utter); return true; } catch { return false; }
+      };
+      if (speechSynthesis.getVoices().length) { return trySpeak(); }
+      else {
+        let spoken = false;
+        const handler = () => { if (!spoken) spoken = trySpeak(); speechSynthesis.removeEventListener('voiceschanged', handler); };
+        speechSynthesis.addEventListener('voiceschanged', handler);
+        setTimeout(() => { if (!spoken) trySpeak(); }, 1200);
+        return true;
+      }
+    }
+
+    function enableSoundNow() { speakText("Thank you for visiting my profile"); }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    window.addEventListener('load', async () => {
+      aiOverlay.classList.add('show');
+      aiOverlay.addEventListener('click', (e) => { if (e.target === aiOverlay) hideOverlay(); });
+      skipBtn.addEventListener('click', hideOverlay);
+      soundBtn.addEventListener('click', enableSoundNow);
+
+      setTimeout(() => { speakText("Thank you for visiting my profile"); }, 800);
+
+      if (prefersReduced) {
+        typeSpan.textContent = "Welcome to my portfolio. Scroll to explore ↓";
+        setTimeout(hideOverlay, 1800);
+        return;
+      }
+      try { await typeLines(lines, typeSpan, 22, 700); }
+      finally { setTimeout(hideOverlay, 600); }
+    });
+  </script>
+
+</body>
+</html>
