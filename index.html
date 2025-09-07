@@ -162,21 +162,44 @@
   </div>
 
   <!-- ===== Header ===== -->
-  <header>
-    <nav class="nav container">
-      <a class="brand" href="#home" style="display:flex;align-items:center;font-weight:bold;font-size:1.2rem;">Dixit Patel</a>
-      <div class="links" style="display:flex;gap:20px;align-items:center;">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
-        <a href="#hackathons">Hackathons</a>
-        <a href="#skills">Skills</a>
-        <a href="#certifications">Certifications</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </nav>
-  </header>
+<header>
+  <nav class="nav container" aria-label="Primary">
+    <a class="brand" href="#home" style="display:flex;align-items:center;font-weight:bold;font-size:1.2rem;">
+      Dixit Patel
+    </a>
+
+    <!-- Desktop links -->
+    <div class="links" style="display:flex;gap:20px;align-items:center;">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#hackathons">Hackathons</a>
+      <a href="#skills">Skills</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile menu panel -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="m-links container">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#projects">Projects</a>
+    <a href="#hackathons">Hackathons</a>
+    <a href="#skills">Skills</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
+</div>
 
   <!-- ===== Hero ===== -->
   <section id="home" class="hero" style="padding:60px 0;">
